@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">AlmoskyAdmin</string>
+
+    <string name="text_welcome_message">"Welcome to Almosky laundry manager"</string>
+    <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout.ScrollingViewBehavior</string>
+
+    <string name="edt_hint_email">Email</string>
+    <string name="edt_hint_first_name">First Name</string>
+    <string name="edt_hint_last_name">Last Name</string>
+    <string name="edt_hint_password">Password</string>
+    <string name="edt_hint_phone">Mobile</string>
+    <string name="edt_hint_username">Username</string>
+    <string name="btn_forget_password">Did you forget your password?</string>
+    <string name="btn_login">LET’S GET STARTED</string>
+    <string name="text_order_no">Order No.</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+
+    <string name="text_title_address">Address</string>
+    <string name="text_pick_up">Pickup</string>
+    <string name="text_change">Change</string>
+    <string name="text_delivery">Delivery</string>
+    <string name="text_delivery_charges">Delivery charges:</string>
+    <string name="text_delivery_fee">Delivery fee</string>
+    <string name="text_delivery_type_fast">Delivery type :</string>
+    <string name="text_delivery_type_normal">Delivery type :</string>
+    <string name="dry_clean">Dry clean</string>
+    <string name="quantity">Quantity</string>
+    <string name="price">Price</string>
+    <string name="wash_iron">Wash+Iron</string>
+    <string name="wash_iron_hang">Wash,iron and hang</string>
+    <string name="ironing">Ironing</string>
+    <string name="text_order_total">Order total</string>
+    <string name="text_offer">Nasab Club Offer Applied</string>
+    <string name="text_p"></string>
+    <string name="edt_hint_add_cleaning_note">Add cleaning note</string>
+
+
+<!-- edit order -->
+    <string name="dry_clean_iron_and_hang">Dry clean,iron and hang</string>
+    <string name="iron_and_hang">Iron and hang</string>
+    <string name="add_to_basket">Add to basket</string>
+
+    <string name="text_normal">Normal</string>
+    <string name="text_normal_service">Normal service</string>
+    <string name="text_fast_service">Fast service</string>
+    <string name="text_fast_service_message">Extra charge will be applied</string>
+    <string name="printer_connected">Printer Connected</string>
+
+
+</resources>

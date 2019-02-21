@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="xl_margin">16.0dip</dimen>
+    <dimen name="x_sm_text_size">14.0sp</dimen>
+    <dimen name="xsm_padding">5.0dip</dimen>
+    <dimen name="xl_text_size">33.0sp</dimen>
+    <dimen name="l_text_size">20.0sp</dimen>
+    <dimen name="md_text_size">18.0sp</dimen>
+    <dimen name="normal_icon_size">24.0dip</dimen>
+    <dimen name="sm_padding">16.0dip</dimen>
+    <dimen name="ten_dp">10dp</dimen>
+    <dimen name="fifteen_dp">15dp</dimen>
+    <dimen name="twenty_dp">20dp</dimen>
+    <dimen name="thirty_dp">30dp</dimen>
+    <dimen name="dp1">1dp</dimen>
+    <dimen name="sp14">14sp</dimen>
+    <dimen name="sp16">16sp</dimen>
+
+</resources>

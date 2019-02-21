@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="admin.com.almoskyadmin.activity.AddNewDriverActivity"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        app:errorTextAppearance="@style/TextLabel.Primary.Error"
+        app:hintTextAppearance="@style/TextLabel.Primary">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edt_email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="FullName"
+            android:inputType="text"
+            android:theme="@style/TextLabel.Primary" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/edt_hint_password"
+        app:errorTextAppearance="@style/TextLabel.Primary.Error"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/TextLabel.Primary"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorTextSecondary">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edt_password"
+
+
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="@integer/gravity"
+            android:inputType="textPassword"
+            android:theme="@style/TextLabel.Primary" />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Retype Password"
+        app:errorTextAppearance="@style/TextLabel.Primary.Error"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/TextLabel.Primary"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorTextSecondary">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edt_repassword"
+
+
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="@integer/gravity"
+            android:inputType="textPassword"
+            android:theme="@style/TextLabel.Primary" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_add_driver"
+        style="@style/Button.Primary"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Add"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
+
+</LinearLayout>
