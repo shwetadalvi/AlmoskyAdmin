@@ -25,6 +25,7 @@ import admin.com.almoskyadmin.activity.HomeActivity;
 import admin.com.almoskyadmin.adapter.InProgressOrderListAdapter;
 import admin.com.almoskyadmin.model.OrderListdto;
 import admin.com.almoskyadmin.utils.AppPrefes;
+import admin.com.almoskyadmin.utils.Utility;
 import admin.com.almoskyadmin.utils.api.ApiCalls;
 import admin.com.almoskyadmin.utils.constants.ApiConstants;
 import admin.com.almoskyadmin.utils.constants.PrefConstants;
@@ -42,6 +43,9 @@ public class InProgressOrdersFragments extends Fragment implements HomeActivity.
     HomeActivity tabHostActivity;
     RecyclerView rvOrders;
     InProgressOrdersFragments fragments;
+
+    private boolean isVisible;
+    private boolean isStarted;
 
     private static final String ARG_PAGE_NUMBER = "page_number";
 
@@ -78,12 +82,27 @@ public class InProgressOrdersFragments extends Fragment implements HomeActivity.
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+        isVisible = isVisibleToUser;
+        if (isVisible && isStarted){
+            Utility.clearTempData();
             getOrders();
-            // load data here
-        } else {
-            // fragment is no longer visible
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isStarted = false;
+    }
+//created? s
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStarted = true;
+        if (isVisible) {
+            Utility.clearTempData();
+            getOrders();
+        } //your request method
     }
 
     public void updateOrder(int id) {
@@ -94,9 +113,9 @@ public class InProgressOrdersFragments extends Fragment implements HomeActivity.
         RequestParams params = new RequestParams();
 
         params.put("email", appPrefes.getData(PrefConstants.email));
-        params.put("status", 3);
+        params.put("status", 4);
         params.put("orderId", id);
-        String url = "https://abrlaundryapp.herokuapp.com/order/update";
+        String url = "http://148.72.64.138:3006/order/update";
         //apiCalls.callApiPost(tabHostActivity, params, dialog, url, 2);
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         // requestParams.put("s", queryTerm);
@@ -150,7 +169,7 @@ public class InProgressOrdersFragments extends Fragment implements HomeActivity.
         RequestParams params = new RequestParams();
 
         params.put("email", appPrefes.getData(PrefConstants.email));
-        params.put("status", 2);
+        params.put("status", 3);
 
 
         String url = ApiConstants.orderListUrl;
@@ -162,6 +181,8 @@ public class InProgressOrdersFragments extends Fragment implements HomeActivity.
     @Override
     public void fragmentinprogressResultInterface(String response, int requestId) {
         try {
+           // Toast.makeText(getActivity(),"progress",Toast.LENGTH_LONG).show();
+
             rvOrders.setAdapter(null);
             Gson gson = new Gson();
             final OrderListdto orderList = gson.fromJson(response, OrderListdto.class);

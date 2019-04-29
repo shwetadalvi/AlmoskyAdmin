@@ -13,7 +13,6 @@ import admin.com.almoskyadmin.activity.HomeActivity;
 import admin.com.almoskyadmin.fragments.InProgressOrdersFragments;
 import admin.com.almoskyadmin.model.OrderListdto;
 import admin.com.almoskyadmin.viewholder.InProgressRecyclerViewHolders;
-import admin.com.almoskyadmin.viewholder.OrderRecyclerViewHolders;
 
 
 public class InProgressOrderListAdapter extends RecyclerView.Adapter<InProgressRecyclerViewHolders> {

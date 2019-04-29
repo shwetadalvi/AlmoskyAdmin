@@ -33,5 +33,13 @@ public interface Constants {
     String COMPANY_BILL_GREETING2 = "Visit again";
     String COMPANY_VAT = "VAT";
     String COMPANY_GROSS = "Gross Amount";
-
+    String NASAB_OFFER = "Nasab Offer";
+    String TERMS_CONDITIONS = "Terms and Conditions";
+    String TERMS1 = "* Articles not collected within 30 days will be disposed off.";
+    String TERMS2 = "* For articles damaged or lost the maximum sum payable will be five times the charge on the bill of the article.";
+    String TERMS3 = "* The laundry will not be responsible for shrinkage or fastness of colours.";
+    String TERMS4 = "* We are not responsible for any valuables left in the pockets.";
+    String TERMS5 = "* Please check your laundry while receiving,company will not be responsible for any lost items.";
+    String TERMS6 = "* Carpet or curtains will take time from 4-10 days.";
+    String TERMS7 = "* Minimum order is AED 45.";
 }

@@ -9,22 +9,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.leo.simplearcloader.ArcConfiguration;
 import com.leo.simplearcloader.SimpleArcDialog;
+import com.loopj.android.http.RequestParams;
 
 import javax.inject.Inject;
 
 import admin.com.almoskyadmin.App;
 import admin.com.almoskyadmin.R;
 import admin.com.almoskyadmin.helper.MyCustomDialog;
+import admin.com.almoskyadmin.notification.MyFirebaseInstanceIDService;
 import admin.com.almoskyadmin.receiver.ConnectionReceiver;
 import admin.com.almoskyadmin.utils.AppPrefes;
 import admin.com.almoskyadmin.utils.UtilsPref;
+import admin.com.almoskyadmin.utils.api.ApiCalls;
+import admin.com.almoskyadmin.utils.constants.ApiConstants;
+import admin.com.almoskyadmin.utils.constants.PrefConstants;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static admin.com.almoskyadmin.utils.constants.PrefConstants.isLogin;
 
-public class BaseActivity extends AppCompatActivity implements ConnectionReceiver.ConnectionReceiverListener {
+
+public class BaseActivity extends AppCompatActivity implements ConnectionReceiver.ConnectionReceiverListener,MyFirebaseInstanceIDService.onFirebaseIdReceivedListener  {
 
     public SimpleArcDialog mDialog;
     @Inject
@@ -129,4 +139,25 @@ public class BaseActivity extends AppCompatActivity implements ConnectionReceive
 
     }
 
+    @Override
+    public void onFirebaseIdRecived(String token) {
+
+        appPrefes.saveData(PrefConstants.token, token);
+        if (appPrefes.getBoolData(isLogin)) {
+            ApiCalls apiCalls = new ApiCalls();
+            RequestParams params = new RequestParams();
+            params.put(ApiConstants.registrationToken, token);
+            String url = ApiConstants.firebaseTokenId;
+            apiCalls.callApiPost((BaseActivity) getApplicationContext(), params, null, url, 1002);
+        }
+
+    }
+    public String getString(View tv) {
+
+        if (tv instanceof EditText) {
+            return ((EditText) tv).getText().toString();
+        } else {
+            return ((TextView) tv).getText().toString();
+        }
+    }
 }

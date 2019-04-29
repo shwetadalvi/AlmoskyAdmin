@@ -35,8 +35,18 @@
     <string name="text_p"></string>
     <string name="edt_hint_add_cleaning_note">Add cleaning note</string>
 
+    <string name="confirm_password">Confirm Password</string>
 
-<!-- edit order -->
+    <string name="enter_email">Enter email</string>
+    <string name="send_verification">Send Verification</string>
+    <string name="enter_the_code">Enter the code</string>
+    <string name="email_cannot_be_empty">email cannot be empty</string>
+    <string name="code_cannot_be_empty">Code cannot be empty</string>
+    <string name="fields_cannot_be_empty">Fields cannot be empty</string>
+    <string name="password_mismatch">Password mismatch</string>
+    <string name="password_changed">Password changed</string>
+
+    <!-- edit order -->
     <string name="dry_clean_iron_and_hang">Dry clean,iron and hang</string>
     <string name="iron_and_hang">Iron and hang</string>
     <string name="add_to_basket">Add to basket</string>
@@ -46,6 +56,6 @@
     <string name="text_fast_service">Fast service</string>
     <string name="text_fast_service_message">Extra charge will be applied</string>
     <string name="printer_connected">Printer Connected</string>
-
+    <string name="no_selection">No Selection</string>
 
 </resources>

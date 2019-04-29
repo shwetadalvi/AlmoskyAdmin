@@ -16,10 +16,10 @@ import com.loopj.android.http.RequestParams;
 
 import admin.com.almoskyadmin.R;
 import admin.com.almoskyadmin.activity.HomeActivity;
-import admin.com.almoskyadmin.adapter.CompletedListAdapter;
 import admin.com.almoskyadmin.adapter.DeliveredListAdapter;
 import admin.com.almoskyadmin.model.OrderListdto;
 import admin.com.almoskyadmin.utils.AppPrefes;
+import admin.com.almoskyadmin.utils.Utility;
 import admin.com.almoskyadmin.utils.api.ApiCalls;
 import admin.com.almoskyadmin.utils.constants.ApiConstants;
 import admin.com.almoskyadmin.utils.constants.PrefConstants;
@@ -34,7 +34,9 @@ public class DeliveredOrdersFragments extends Fragment implements HomeActivity.F
     SimpleArcDialog dialog;
     HomeActivity tabHostActivity;
     RecyclerView rvOrders;
-DeliveredOrdersFragments frag;
+    DeliveredOrdersFragments frag;
+    private boolean isVisible;
+    private boolean isStarted;
     private static final String ARG_PAGE_NUMBER = "page_number";
 
     public DeliveredOrdersFragments() {
@@ -69,15 +71,30 @@ DeliveredOrdersFragments frag;
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        isStarted = true;
+        if (isVisible) {
+            Utility.clearTempData();
+            getOrders();
+        }//your request method
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isStarted = false;
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-
+        isVisible = isVisibleToUser;
+        if (isVisible && isStarted){
+            Utility.clearTempData();
             getOrders();
-            // load data here
-        }else{
-            // fragment is no longer visible
         }
+           //your request method
     }
 
     private void getOrders() {
@@ -86,7 +103,7 @@ DeliveredOrdersFragments frag;
         RequestParams params = new RequestParams();
 
         params.put("email",  appPrefes.getData(PrefConstants.email));
-        params.put("status", 4 );
+        params.put("status", 5);
 
        
 
@@ -103,6 +120,8 @@ DeliveredOrdersFragments frag;
     @Override
     public void fragmentdeliveredResultInterface(String response, int requestId) {
         try{
+
+          //  System.out.println("ctshowing Delivered");
             rvOrders.setAdapter(null);
             Gson gson = new Gson();
             final OrderListdto orderList = gson.fromJson(response, OrderListdto.class);

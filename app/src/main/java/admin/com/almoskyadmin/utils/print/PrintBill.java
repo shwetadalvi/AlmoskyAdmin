@@ -28,9 +28,18 @@ import static admin.com.almoskyadmin.utils.constants.Constants.COMPANY_TELE;
 import static admin.com.almoskyadmin.utils.constants.Constants.COMPANY_TELE2;
 import static admin.com.almoskyadmin.utils.constants.Constants.COMPANY_TRN;
 import static admin.com.almoskyadmin.utils.constants.Constants.COMPANY_VAT;
+import static admin.com.almoskyadmin.utils.constants.Constants.NASAB_OFFER;
+import static admin.com.almoskyadmin.utils.constants.Constants.TERMS1;
+import static admin.com.almoskyadmin.utils.constants.Constants.TERMS2;
+import static admin.com.almoskyadmin.utils.constants.Constants.TERMS3;
+import static admin.com.almoskyadmin.utils.constants.Constants.TERMS4;
+import static admin.com.almoskyadmin.utils.constants.Constants.TERMS5;
+import static admin.com.almoskyadmin.utils.constants.Constants.TERMS6;
+import static admin.com.almoskyadmin.utils.constants.Constants.TERMS7;
+import static admin.com.almoskyadmin.utils.constants.Constants.TERMS_CONDITIONS;
 
 public class PrintBill {
-    public void bluetoothInvoicePrinting(int count, ArrayList<data.Result> drycleanList, ArrayList<data.Result> ironList, ArrayList<data.Result> washList, String orderId, OrderListdto.Result userData, String total, String vat, String offer, String subtotal) {
+    public void bluetoothInvoicePrinting(int count, ArrayList<data.Result> drycleanList, ArrayList<data.Result> ironList, ArrayList<data.Result> washList, int orderId, OrderListdto.Result userData, String total, String vat, String offer, String subtotal) {
         for (int i = 0; i < count; i++) {
             ArrayList<Printable> printables = new ArrayList<>();
             printables.add(new Printable.PrintableBuilder()
@@ -172,17 +181,78 @@ public class PrintBill {
                     .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
                     .setNewLinesAfter(2)
                     .build());
+
+            printables.add(new Printable.PrintableBuilder()
+                    .setText(NASAB_OFFER + createSpace(true, NASAB_OFFER.length(), offer.length()) + offer)
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(4)
+                    .build());
 //            String vat = String.valueOf(order.getOrder().getVat());
             printables.add(new Printable.PrintableBuilder()
                     .setText(COMPANY_VAT + createSpace(true, COMPANY_VAT.length(), vat.length()) + vat)
                     .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
                     .setNewLinesAfter(4)
                     .build());
+
 //            String gross = String.valueOf(order.getOrder().getPrice());
             printables.add(new Printable.PrintableBuilder()
                     .setText(COMPANY_GROSS + createSpace(true, COMPANY_GROSS.length(), subtotal.length()) + subtotal)
                     .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
                     .setNewLinesAfter(4)
+                    .build());
+            printables.add(new Printable.PrintableBuilder()
+                    .setText("................................................")
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(2)
+                    .build());
+            printables.add(new Printable.PrintableBuilder()
+                    .setAlignment(DefaultPrinter.Companion.getALLIGMENT_LEFT())
+                    .setText(TERMS_CONDITIONS)
+                    .setEmphasizedMode(DefaultPrinter.Companion.getEMPHASISED_MODE_BOLD())
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(2)
+                    .build());
+            printables.add(new Printable.PrintableBuilder()
+                    .setAlignment(DefaultPrinter.Companion.getALLIGMENT_LEFT())
+                    .setText(TERMS1)
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(2)
+                    .build());
+            printables.add(new Printable.PrintableBuilder()
+                    .setAlignment(DefaultPrinter.Companion.getALLIGMENT_LEFT())
+                    .setText(TERMS2)
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(2)
+                    .build());
+            printables.add(new Printable.PrintableBuilder()
+                    .setAlignment(DefaultPrinter.Companion.getALLIGMENT_LEFT())
+                    .setText(TERMS3)
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(2)
+                    .build());
+            printables.add(new Printable.PrintableBuilder()
+                    .setAlignment(DefaultPrinter.Companion.getALLIGMENT_LEFT())
+                    .setText(TERMS4)
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(2)
+                    .build());
+            printables.add(new Printable.PrintableBuilder()
+                    .setAlignment(DefaultPrinter.Companion.getALLIGMENT_LEFT())
+                    .setText(TERMS5)
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(2)
+                    .build());
+            printables.add(new Printable.PrintableBuilder()
+                    .setAlignment(DefaultPrinter.Companion.getALLIGMENT_LEFT())
+                    .setText(TERMS6)
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(2)
+                    .build());
+            printables.add(new Printable.PrintableBuilder()
+                    .setAlignment(DefaultPrinter.Companion.getALLIGMENT_LEFT())
+                    .setText(TERMS7)
+                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                    .setNewLinesAfter(2)
                     .build());
             printables.add(new Printable.PrintableBuilder()
                     .setText("................................................")

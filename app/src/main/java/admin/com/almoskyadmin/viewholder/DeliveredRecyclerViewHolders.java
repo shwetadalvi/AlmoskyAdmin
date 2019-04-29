@@ -3,13 +3,13 @@ package admin.com.almoskyadmin.viewholder;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import admin.com.almoskyadmin.AlmoskyAdmin;
 import admin.com.almoskyadmin.R;
 import admin.com.almoskyadmin.activity.HomeActivity;
-import admin.com.almoskyadmin.fragments.CompletedOrdersFragments;
 import admin.com.almoskyadmin.fragments.DeliveredOrdersFragments;
 import admin.com.almoskyadmin.model.OrderListdto;
 
@@ -17,6 +17,7 @@ import admin.com.almoskyadmin.model.OrderListdto;
 public class DeliveredRecyclerViewHolders extends RecyclerView.ViewHolder {
 
     private TextView textTitle;
+    TextView stat,textOrderType;
     //    UserActionCountItemBinding binding;
     public TextView orderdate,orderno,status,custname,pickdate,deldate,area;
 
@@ -40,7 +41,8 @@ public class DeliveredRecyclerViewHolders extends RecyclerView.ViewHolder {
         area=itemView.findViewById(R.id.orderarea);
         pickdate=itemView.findViewById(R.id.pickDate);
         deldate=itemView.findViewById(R.id.delDate);
-
+        stat=itemView.findViewById(R.id.status);
+        textOrderType=itemView.findViewById(R.id.textOrderType);
 
         lyt=itemView.findViewById(R.id.lytOrderList);
         lyt.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +72,34 @@ public class DeliveredRecyclerViewHolders extends RecyclerView.ViewHolder {
         pickdate.setText(item.getPickupTime());
         deldate.setText(item.getDeliveryTime());
         area.setText(item.getArea());
+
+        if (item.getDelivery_type().equalsIgnoreCase("1"))
+            textOrderType.setText("Normal Service");
+        else
+            textOrderType.setText("Fast Service");
+
+        if (item.getPayment_status() == 0) {
+            stat.setTextColor(itemView.getResources().getColor(R.color.colorRed));
+            stat.setText("Unpaid");
+        }else {
+            stat.setTextColor(itemView.getResources().getColor(R.color.main_green_color));
+            stat.setText("Paid");
+        }
+
+        /*if(item.getOrderStatus()==5){
+
+            stat.setVisibility(View.VISIBLE);
+            stat.setText("To be Delivered");
+            stat.setBackgroundColor(itemView.getResources().getColor(R.color.main_green_color));
+        }
+        if(item.getOrderStatus()==6){
+
+            stat.setVisibility(View.VISIBLE);
+            stat.setText("Delivered");
+            stat.setBackgroundColor(itemView.getResources().getColor(R.color.colorRed));
+
+        }*/
+
 
 
       /*  String address = "";

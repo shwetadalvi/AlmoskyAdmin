@@ -20,12 +20,15 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+
 import admin.com.almoskyadmin.AlmoskyAdmin;
 import admin.com.almoskyadmin.R;
 import admin.com.almoskyadmin.activity.HomeActivity;
 import admin.com.almoskyadmin.adapter.PickupOrderListAdapter;
 import admin.com.almoskyadmin.model.OrderListdto;
 import admin.com.almoskyadmin.utils.AppPrefes;
+import admin.com.almoskyadmin.utils.Utility;
 import admin.com.almoskyadmin.utils.api.ApiCalls;
 import admin.com.almoskyadmin.utils.constants.ApiConstants;
 import admin.com.almoskyadmin.utils.constants.PrefConstants;
@@ -43,6 +46,9 @@ public class PickupOrdersFragments extends Fragment implements HomeActivity.Frag
     HomeActivity tabHostActivity;
     RecyclerView rvOrders;
     PickupOrdersFragments frag;
+
+    private boolean isVisible;
+    private boolean isStarted;
 
     private static final String ARG_PAGE_NUMBER = "page_number";
     public static int i = 0;
@@ -84,16 +90,38 @@ public class PickupOrdersFragments extends Fragment implements HomeActivity.Frag
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        isStarted = true;
+        if (isVisible) {
+            Utility.clearTempData();
+            getOrders();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isStarted = false;
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+     /*   if (isVisibleToUser) {
             if (i != 0 && isViewCreated) {
                 getOrders();
             }
             // load data here
         } else {
             // fragment is no longer visible
+        }*/
+        isVisible = isVisibleToUser;
+        if (isVisible && isStarted){
+            Utility.clearTempData();
+            getOrders();
         }
+
     }
 
     private void getOrders() {
@@ -130,7 +158,7 @@ public class PickupOrdersFragments extends Fragment implements HomeActivity.Frag
         params.put("email", appPrefes.getData(PrefConstants.email));
         params.put("status", 1);
         params.put("orderId", id);
-        String url = "https://abrlaundryapp.herokuapp.com/order/update";
+        String url = "http://148.72.64.138:3006/order/update";
         //apiCalls.callApiPost(tabHostActivity, params, dialog, url, 2);
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         // requestParams.put("s", queryTerm);
@@ -184,17 +212,42 @@ public class PickupOrdersFragments extends Fragment implements HomeActivity.Frag
     @Override
     public void fragmentPickupResultInterface(String response, int requestId) {
         try {
+
+            long date = System.currentTimeMillis();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yy");
+            String dateString = sdf.format(date);
+
+            System.out.println("date"+dateString);
+
             rvOrders.setAdapter(null);
             Gson gson = new Gson();
-
-
             final OrderListdto orderList = gson.fromJson(response, OrderListdto.class);
 
             AlmoskyAdmin.getInst().setCurrentOrders(orderList.getResult());
+
+          /*  ArrayList<String> str=new ArrayList<>();
+
+
+            for(int i=0;i<orderList.getResult().size();i++){
+
+                String[] lst=orderList.getResult().get(i).getPickupTime().split(" ");
+
+                str.add(lst[0]);
+                if(dateString.equals(lst[0])){
+                    System.out.println("dtr Today"+lst[0]);
+                }
+
+
+            }
+
+            List<String> newList = new ArrayList<String>(new HashSet<String>(str));*/
+
+
             PickupOrderListAdapter mAdapter = new PickupOrderListAdapter(tabHostActivity, orderList.getResult(), frag, tabHostActivity);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(tabHostActivity);
             rvOrders.setLayoutManager(mLayoutManager);
-            rvOrders.setItemAnimator(new DefaultItemAnimator());
+           // rvOrders.setItemAnimator(new DefaultItemAnimator());
             rvOrders.setAdapter(mAdapter);
 
 

@@ -17,6 +17,7 @@ public interface PrefConstants {
     String home="home";
     String office="home";
     String uid="uid";
+    String token = "token";
 
 
 

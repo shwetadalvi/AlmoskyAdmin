@@ -20,7 +20,7 @@ public class PickupRecyclerViewHolders extends RecyclerView.ViewHolder {
     private TextView textTitle;
     //    UserActionCountItemBinding binding;
     public TextView orderdate,orderno,status,custname,pickdate,deldate,area;
-
+private TextView stat,textOrderType;
 
     public final Context ctx;
     LinearLayout lyt;
@@ -41,10 +41,11 @@ public class PickupRecyclerViewHolders extends RecyclerView.ViewHolder {
         area=itemView.findViewById(R.id.orderarea);
         pickdate=itemView.findViewById(R.id.pickDate);
         deldate=itemView.findViewById(R.id.delDate);
-
+        textOrderType= itemView.findViewById(R.id.textOrderType);
 
         lyt=itemView.findViewById(R.id.lytOrderList);
-        Button status=itemView.findViewById(R.id.status);
+        stat=itemView.findViewById(R.id.status);
+
 
         lyt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +73,18 @@ public class PickupRecyclerViewHolders extends RecyclerView.ViewHolder {
         deldate.setText(item.getDeliveryTime());
         area.setText(item.getArea());
 
+        if (item.getDelivery_type().equalsIgnoreCase("1"))
+            textOrderType.setText("Normal Service");
+        else
+            textOrderType.setText("Fast Service");
+
+        if (item.getPayment_status() == 0) {
+            stat.setTextColor(itemView.getResources().getColor(R.color.white));
+            stat.setText("Unpaid");
+        }else {
+            stat.setTextColor(itemView.getResources().getColor(R.color.white));
+            stat.setText("Paid");
+        }
 
       /*  String address = "";
 

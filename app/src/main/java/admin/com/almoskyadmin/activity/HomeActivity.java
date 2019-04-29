@@ -17,7 +17,9 @@ import admin.com.almoskyadmin.AlmoskyAdmin;
 import admin.com.almoskyadmin.R;
 import admin.com.almoskyadmin.common.BaseActivity;
 import admin.com.almoskyadmin.databinding.ActivityHomeBinding;
+import admin.com.almoskyadmin.fragments.CollectedFragments;
 import admin.com.almoskyadmin.fragments.OrderFragments;
+import admin.com.almoskyadmin.fragments.OutForDeliveryFragments;
 import admin.com.almoskyadmin.fragments.Settingsfragments;
 
 
@@ -33,7 +35,9 @@ public class HomeActivity extends BaseActivity {
     private FragmentInProgressResultInterface progresslistener;
     private FragmentCompletedResultInterface completedlistener;
     private FragmentDeliveredResultInterface deliveredlistener;
-
+    private FragmentCollectedResultInterface collectedlistener;
+    private FragmentOutForDeliveryResultInterface outfordeliverylistener;
+    private FragmentCancelledResultInterface cancelledlistener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -147,13 +151,28 @@ public class HomeActivity extends BaseActivity {
     public interface FragmentDeliveredResultInterface{
         void fragmentdeliveredResultInterface(String response, int requestId);
     }
+    public interface FragmentCancelledResultInterface{
+        void fragmentCancelledResultInterface(String response, int requestId);
+    }
     public void setDeliveredListener(FragmentDeliveredResultInterface fragmentdeliveredResultInterface){
         this.deliveredlistener = fragmentdeliveredResultInterface;
     }
 
-
-
-
+    public interface FragmentCollectedResultInterface{
+        void fragmentcollectedResultInterface(String response, int requestId);
+    }
+    public void setCollectedListener(FragmentCollectedResultInterface fragmentCollectedResultInterface){
+        this.collectedlistener = fragmentCollectedResultInterface;
+    }
+    public interface FragmentOutForDeliveryResultInterface{
+        void fragmentoutofdeliveryResultInterface(String response, int requestId);
+    }
+    public void setOutOfDeliveryListener(FragmentOutForDeliveryResultInterface fragmentOutForDeliveryResultInterface){
+        this.outfordeliverylistener = fragmentOutForDeliveryResultInterface;
+    }
+    public void setCancelledlistener(FragmentCancelledResultInterface fragmentCancelledResultInterface){
+        this.cancelledlistener = fragmentCancelledResultInterface;
+    }
 
     @Override
     public void getResponse(String response, int requestId) {
@@ -170,10 +189,16 @@ public class HomeActivity extends BaseActivity {
         else if(requestId==4){
             completedlistener.fragmentcompletedResultInterface(response,requestId);
         }
-        else
-            deliveredlistener.fragmentdeliveredResultInterface(response,requestId);
-
-
+        else if(requestId==5) {
+            deliveredlistener.fragmentdeliveredResultInterface(response, requestId);
+        }
+  else if(requestId==6) {
+            collectedlistener.fragmentcollectedResultInterface(response, requestId);
+        }  else if(requestId==7) {
+            outfordeliverylistener.fragmentoutofdeliveryResultInterface(response, requestId);
+        }else if(requestId==8) {
+            cancelledlistener.fragmentCancelledResultInterface(response, requestId);
+        }
 
     }
 }

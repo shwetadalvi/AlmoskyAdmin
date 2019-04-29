@@ -1,9 +1,12 @@
 package admin.com.almoskyadmin.activity.editOrder;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,14 +54,12 @@ public class CategoryListActivity extends BaseActivity {
     private ConstraintLayout bottomLayout;
 
     public TextView cartcount, cartamount;
-    ArrayList<data1.Detail.Item> dry;
-    ArrayList<data1.Detail.Item> wash;
-    ArrayList<data1.Detail.Item> iron;
+
     ArrayList<data1.Detail.Item> drytmp;
     ArrayList<data1.Detail.Item> washtmp;
     ArrayList<data1.Detail.Item> irontmp;
     private double totalamount;
-
+    double orderTotal = 0, vat = 0, finalOrderTotal = 0, nasabDiscount = 0,customerDiscount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,9 +84,7 @@ public class CategoryListActivity extends BaseActivity {
 
                 bottomLayout = findViewById(R.id.bottomLayout_edit);
 
-                dry = AlmoskyAdmin.getInst().getDrycleanList1();
-                wash = AlmoskyAdmin.getInst().getWashList1();
-                iron = AlmoskyAdmin.getInst().getIronList1();
+
 
                 drytmp = AlmoskyAdmin.getInst().getDrycleanList1temp();
                 washtmp = AlmoskyAdmin.getInst().getWashList1temp();
@@ -95,7 +94,7 @@ public class CategoryListActivity extends BaseActivity {
                   // totalamount= checkCart();
                   // editOrder();
                     bottomLayout.setVisibility(View.VISIBLE);
-
+                    checkCart();
                    // setDatas();
                 }
 
@@ -104,9 +103,92 @@ public class CategoryListActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
 
-                        totalamount= checkCart();
-                        editOrder();
+                     //  checkCart();
+                      //  editOrder();
 
+                        if(AlmoskyAdmin.getInst().getDeliveryType()==1){
+                            editOrder();
+                        }
+                        else{
+
+                            if(AlmoskyAdmin.getInst().isOffer()){
+                              //  String splitAmount[]=mBinding.subtotalPrice.getText().toString().split("AED");
+                             //   Double amount=Double.valueOf((splitAmount[0]));
+                                double amount = finalOrderTotal;
+                                double vat=(amount*0.05);
+                                double subtotal= amount+vat;
+
+                                double discount=(subtotal*0.3);
+                                double discountAmount=subtotal-(subtotal*0.3);
+
+
+
+                                if(amount<80){
+                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getApplicationContext());
+                                    builder1.setMessage("Minimum Order Amount Must be AED80");
+                                    builder1.setCancelable(false);
+
+                                    builder1.setPositiveButton(
+                                            "Ok",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+
+
+                                                }
+                                            });
+                                    AlertDialog alert11 = builder1.create();
+                                    alert11.show();
+
+
+                                }else {
+
+                                    editOrder();
+
+                                }
+
+                            }else{
+
+
+//                                String splitAmount[]=mBinding.subtotalPrice.getText().toString().split("AED");
+//                                Double amount=Double.valueOf((splitAmount[0]));
+                                double amount = finalOrderTotal;
+                                double vat=(amount*0.05);
+                                double subtotal= amount+vat;
+
+                                double discount=(subtotal*0.3);
+                                double discountAmount=subtotal-(subtotal*0.3);
+
+
+
+                                if(amount<45){
+
+                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getApplicationContext());
+                                    builder1.setMessage("Minimum Order Amount Must be AED45");
+                                    builder1.setCancelable(false);
+
+                                    builder1.setPositiveButton(
+                                            "Ok",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+
+
+                                                }
+                                            });
+                                    AlertDialog alert11 = builder1.create();
+                                    alert11.show();
+
+
+
+                                }else {
+
+                                    editOrder();
+
+                                }
+                            }
+
+                        }
 
 
 
@@ -188,9 +270,9 @@ public class CategoryListActivity extends BaseActivity {
 
     private void editOrder() {
 
-        System.out.println(AlmoskyAdmin.getInst().getDrycleanList1temp().size());
-        System.out.println(AlmoskyAdmin.getInst().getWashList1temp().size());
-        System.out.println(AlmoskyAdmin.getInst().getIronList1temp().size());
+  //      System.out.println(AlmoskyAdmin.getInst().getDrycleanList1temp().size());
+//        System.out.println(AlmoskyAdmin.getInst().getWashList1temp().size());
+    //    System.out.println(AlmoskyAdmin.getInst().getIronList1temp().size());
 
 
         ArrayList<data1.Detail.Item> dry = AlmoskyAdmin.getInst().getDrycleanList1temp();
@@ -209,7 +291,27 @@ public class CategoryListActivity extends BaseActivity {
                 object.put(Constants.email, appPrefes.getData(PrefConstants.email));
                 object.put("orderId", AlmoskyAdmin.getInst().getSelecterOrderId());
                 object.put("totalamount", totalamount);
-                object.put("remarks", AlmoskyAdmin.getInst().getSelectedOrder().getAdditional());
+               // object.put("remarks", AlmoskyAdmin.getInst().getSelectedOrder().getAdditional());
+               object.put("pickdate", AlmoskyAdmin.getInst().getSelectedOrder().getPdate());
+                object.put("picktime", AlmoskyAdmin.getInst().getSelectedOrder().getPtime());
+                object.put("deldate", AlmoskyAdmin.getInst().getSelectedOrder().getDdate());
+                object.put("deltime",AlmoskyAdmin.getInst().getSelectedOrder().getDtime());
+             object.put("addressId", AlmoskyAdmin.getInst().getSelectedOrder().getAddressId());
+                object.put("deliveryType", (AlmoskyAdmin.getInst().getSelectedOrder().getDelivery_type()));
+                object.put("nasabDiscountAmount", nasabDiscount);
+                object.put("customerDiscount", customerDiscount);
+                object.put("discountPercentage", AlmoskyAdmin.getInst().getSelectedOrder().getCustomer_disc_perc());
+                object.put("nasabPercentage", AlmoskyAdmin.getInst().getSelectedOrder().getNasab_disc_perc());
+                object.put("vatAmount",vat);
+                object.put("itemAmount", finalOrderTotal);
+                //  object.put("orderDate", "2014-12-5");
+
+                //  object.put("dedate", appPrefes.getData("orderTime"));
+                //  object.put("orderTime", "6:30:00");
+
+
+
+
 
 
 
@@ -281,7 +383,7 @@ public class CategoryListActivity extends BaseActivity {
                 String Data = object.toString();
 
 
-
+                Log.e("Inside :","JSON :Data"+Data);
                 StringEntity entity = null;
                 final SimpleArcDialog dialog = new SimpleArcDialog(CategoryListActivity.this);
                 try {
@@ -302,14 +404,35 @@ public class CategoryListActivity extends BaseActivity {
                             String object = new String(responseBody);
                             JSONObject jsonObject = new JSONObject(object);
                             String result = jsonObject.getString("result");
-
+                            Log.e("Inside :","JSON :response"+result);
                             if (result.equals("Data Updated")) {
 
 
                                 AlmoskyAdmin.getInst().setUpdate(true);
                                 Intent go=new Intent(CategoryListActivity.this,OrderDetailsActivity.class);
-                             //   go.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                               go.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(go);
+
+                                AlmoskyAdmin.getInst().setIronList(null);
+                                AlmoskyAdmin.getInst().setCartcount(0);
+                                AlmoskyAdmin.getInst().setWashList(null);
+                                AlmoskyAdmin.getInst().setDrycleanList(null);
+                                AlmoskyAdmin.getInst().setCartamount(0);
+
+                                AlmoskyAdmin.getInst().setNasabRate(0);
+                                AlmoskyAdmin.getInst().setNisabClub(false);
+                                AlmoskyAdmin.getInst().setDrycleanList1temp(null);
+                                AlmoskyAdmin.getInst().setWashList1temp(null);
+                                AlmoskyAdmin.getInst().setIronList1temp(null);
+                                AlmoskyAdmin.getInst().setSelectedOrderType(null);
+                                AlmoskyAdmin.getInst().setSelectedOrder(null);
+                                AlmoskyAdmin.getInst().setIronList(null);
+                                AlmoskyAdmin.getInst().setWashList(null);
+                                AlmoskyAdmin.getInst().setDrycleanList(null);
+                                AlmoskyAdmin.getInst().setCurentOrderId(null);
+                                AlmoskyAdmin.getInst().setSelecterOrderId(0);
+                                AlmoskyAdmin.getInst().setCurrentOrders(null);
+
                           /*      new SweetAlertDialog(CategoryListActivity.this, SweetAlertDialog.NORMAL_TYPE)
                                         .setTitleText("Success")
                                         .setContentText("Success")
@@ -403,41 +526,72 @@ public class CategoryListActivity extends BaseActivity {
         }return rFinal;
     }
 
-    private double checkCart() {
 
+    private void checkCart() {
+        Log.e("Inside :","JSON :checkCart");
         try{
             double drycount = 0, dryamount = 0, washcount = 0, washamount = 0, ironcount = 0, ironamount = 0;
 
 
             if (null != drytmp) {
+                Log.e("Inside :","JSON :drytmp"+drytmp.size());
                 for (int i = 0; i < drytmp.size(); i++) {
-                    drycount = drycount + drytmp.get(i).getItemcount();
-                    dryamount = dryamount + Double.parseDouble(drytmp.get(i).getTotal());
+                   // drycount = drycount + drytmp.get(i).getItemcount();
+                    if(drytmp.get(i).getItemcount() == 0)
+                    dryamount = dryamount + Double.parseDouble(drytmp.get(i).getAmount()  );
+                    else
+                        dryamount = dryamount +(  Double.parseDouble(drytmp.get(i).getAmount() )* drytmp.get(i).getItemcount() );
+                    Log.e("Inside :","JSON :dryamount"+dryamount);
                 }
 
             }
             if (null != washtmp) {
+                Log.e("Inside :","JSON :washtmp"+washtmp.size());
                 for (int i = 0; i < washtmp.size(); i++) {
 
-                    washcount = washcount + washtmp.get(i).getItemcount();
-                    washamount = washamount + Double.parseDouble(washtmp.get(i).getTotal());
+                   // washcount = washcount + washtmp.get(i).getItemcount();
+                    if(washtmp.get(i).getItemcount() == 0)
+                    washamount = washamount +  Double.parseDouble(washtmp.get(i).getAmount());
+                    else
+                        washamount = washamount +(  Double.parseDouble(washtmp.get(i).getAmount() )* washtmp.get(i).getItemcount() );
+                    Log.e("Inside :","JSON :washamount"+washamount);
                 }
 
             }
             if (null != irontmp) {
-
+                Log.e("Inside :","JSON :irontmp"+irontmp.size());
                 for (int i = 0; i < irontmp.size(); i++) {
-                    ironcount = ironcount + irontmp.get(i).getItemcount();
-                    ironamount = ironamount + Double.parseDouble(irontmp.get(i).getTotal());
+                  //  ironcount = ironcount + irontmp.get(i).getItemcount();
+                    if(irontmp.get(i).getItemcount() == 0)
+                    ironamount = ironamount +  Double.parseDouble(irontmp.get(i).getAmount());
+                    else
+                        ironamount = ironamount +(  Double.parseDouble(irontmp.get(i).getAmount() )* irontmp.get(i).getItemcount() );
+                    Log.e("Inside :","JSON :ironamount"+ironamount);
                 }
 
             }
 
-            double totalcount = drycount + washcount + ironcount;
+           // double totalcount = drycount + washcount + ironcount;
             totalamount = dryamount + washamount + ironamount;
 
 
+            Log.e("Inside :","JSON :finalOrderTotal"+finalOrderTotal);
 
+            if( AlmoskyAdmin.getInst().isNisabClub()) {
+                nasabDiscount = calculateNasabDiscount(finalOrderTotal);
+                finalOrderTotal = totalamount- nasabDiscount;
+            }else{
+                if(AlmoskyAdmin.getInst().getSelectedOrder().getCustomerDiscount() > 0){
+
+                    customerDiscount = totalamount * (AlmoskyAdmin.getInst().getSelectedOrder().getCustomer_disc_perc() * 0.01);
+                    finalOrderTotal = totalamount- customerDiscount;
+
+                }
+            }
+
+
+            vat = calculateVat(finalOrderTotal);
+            finalOrderTotal = (vat + finalOrderTotal);
      /*   if (totalamount > 0 && totalcount > 0) {
 
             bottomLayout.setVisibility(View.VISIBLE);
@@ -493,11 +647,18 @@ public class CategoryListActivity extends BaseActivity {
         }
 
 */
-            return totalcount;
+
         }catch (Exception e){
             e.printStackTrace();
         }
-        return totalamount;
+
+    }
+    private double calculateNasabDiscount(double orderTotal) {
+        return orderTotal * AlmoskyAdmin.getInst().getSelectedOrder().getNasab_disc_perc()* 0.01;
+    }
+
+    private double calculateVat(double orderTotal) {
+        return orderTotal * 5 / 100;
     }
 
     @Override

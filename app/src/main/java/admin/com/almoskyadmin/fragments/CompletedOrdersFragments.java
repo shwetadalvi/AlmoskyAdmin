@@ -17,9 +17,9 @@ import com.loopj.android.http.RequestParams;
 import admin.com.almoskyadmin.R;
 import admin.com.almoskyadmin.activity.HomeActivity;
 import admin.com.almoskyadmin.adapter.CompletedListAdapter;
-import admin.com.almoskyadmin.adapter.OrderListAdapter;
 import admin.com.almoskyadmin.model.OrderListdto;
 import admin.com.almoskyadmin.utils.AppPrefes;
+import admin.com.almoskyadmin.utils.Utility;
 import admin.com.almoskyadmin.utils.api.ApiCalls;
 import admin.com.almoskyadmin.utils.constants.ApiConstants;
 import admin.com.almoskyadmin.utils.constants.PrefConstants;
@@ -34,7 +34,9 @@ public class CompletedOrdersFragments extends Fragment implements HomeActivity.F
     SimpleArcDialog dialog;
     HomeActivity tabHostActivity;
     RecyclerView rvOrders;
-CompletedOrdersFragments frag;
+    CompletedOrdersFragments frag;
+    private boolean isVisible;
+    private boolean isStarted;
     private static final String ARG_PAGE_NUMBER = "page_number";
 
     public CompletedOrdersFragments() {
@@ -71,12 +73,28 @@ CompletedOrdersFragments frag;
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isVisible = isVisibleToUser;
+        if (isVisible && isStarted){
+            Utility.clearTempData();
             getOrders();
-            // load data here
-        }else{
-            // fragment is no longer visible
-        }
+        } //your request method
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isStarted = false;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStarted = true;
+        if (isVisible) {
+            Utility.clearTempData();
+            getOrders();
+        } //your request method
     }
 
     private void getOrders() {
@@ -85,8 +103,8 @@ CompletedOrdersFragments frag;
         RequestParams params = new RequestParams();
 
         params.put("email",  appPrefes.getData(PrefConstants.email));
-        params.put("status", 3 );
-
+       // params.put("status", 4 );
+        params.put("status",6 );
        
 
         String url = ApiConstants.orderListUrl;
@@ -98,6 +116,8 @@ CompletedOrdersFragments frag;
     @Override
     public void fragmentcompletedResultInterface(String response, int requestId) {
         try{
+           // Toast.makeText(getActivity(),"completed",Toast.LENGTH_LONG).show();
+
             rvOrders.setAdapter(null);
             Gson gson = new Gson();
             final OrderListdto orderList = gson.fromJson(response, OrderListdto.class);

@@ -1,7 +1,8 @@
 package admin.com.almoskyadmin;
 
-
 import android.app.Application;
+
+import com.mazenrashed.printooth.Printooth;
 
 import admin.com.almoskyadmin.di.component.ActivityComponent;
 import admin.com.almoskyadmin.di.component.AppComponent;
@@ -10,9 +11,7 @@ import admin.com.almoskyadmin.di.component.DaggerAppComponent;
 import admin.com.almoskyadmin.di.module.ApplicationModule;
 import admin.com.almoskyadmin.receiver.ConnectionReceiver;
 
-
 public class App extends Application {
-
     private AppComponent mAppComponent;
     private ActivityComponent activityComponent;
     private static App mInstance;
@@ -20,7 +19,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        Printooth.INSTANCE.init(this);
+        Printooth.INSTANCE.init(this);
 //        ViewTarget.setTagId(R.id.glide_tag);
 
         /*CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
@@ -37,7 +36,6 @@ public class App extends Application {
         activityComponent = DaggerActivityComponent.builder()
                 .appComponent(mAppComponent).build();
         mInstance = this;
-
     }
 
     public AppComponent getAppComponent() {
@@ -55,4 +53,5 @@ public class App extends Application {
     public void setConnectionListener(ConnectionReceiver.ConnectionReceiverListener listener) {
         ConnectionReceiver.connectionReceiverListener = listener;
     }
+
 }

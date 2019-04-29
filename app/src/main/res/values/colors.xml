@@ -27,5 +27,5 @@
 
     <color name="md_white_1000">#ffffffff</color>
     <color name="md_grey_500">#ff9e9e9e</color>
-
+    <color name="darkBlue">#59608e</color>
 </resources>

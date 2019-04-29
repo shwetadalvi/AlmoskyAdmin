@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/lytOrderList">
+    android:id="@+id/lytOrderList"
+    android:background="@color/green">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             android:minWidth="80.0dip"
             android:layout_alignParentRight="true"
 
-            android:textColor="@color/colorDarkBlue"
+            android:textColor="@color/white"
             />
     </RelativeLayout>
 
@@ -76,20 +77,27 @@
             android:layout_marginStart="12dp"
             />
 
-        <Button
+        <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="12dp"
-            android:background="@color/green"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:text="change"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
 
     </RelativeLayout>
-
+<TextView
+    android:id="@+id/textOrderType"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:layout_marginStart="10.0dip"
+   />
 
     <View
         android:layout_width="match_parent"

@@ -22,7 +22,7 @@ public class InProgressRecyclerViewHolders extends RecyclerView.ViewHolder {
     public TextView orderdate,orderno,status,custname,pickdate,deldate,area;
     InProgressOrdersFragments _frag;
 
-
+    private TextView stat,textOrderType;
     public final Context ctx;
     LinearLayout lyt;
     OrderListdto.Result data;
@@ -41,12 +41,13 @@ public class InProgressRecyclerViewHolders extends RecyclerView.ViewHolder {
         area=itemView.findViewById(R.id.orderarea);
         pickdate=itemView.findViewById(R.id.pickDate);
         deldate=itemView.findViewById(R.id.delDate);
-
+        stat = itemView.findViewById(R.id.status);
+        textOrderType = itemView.findViewById(R.id.textOrderType);
 
         lyt=itemView.findViewById(R.id.lytOrderList);
 
 
-        Button status=itemView.findViewById(R.id.status);
+
 
         lyt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +74,18 @@ public class InProgressRecyclerViewHolders extends RecyclerView.ViewHolder {
         deldate.setText(item.getDeliveryTime());
         area.setText(item.getArea());
 
+        if (item.getDelivery_type().equalsIgnoreCase("1"))
+            textOrderType.setText("Normal Service");
+        else
+            textOrderType.setText("Fast Service");
+
+        if (item.getPayment_status() == 0) {
+            stat.setTextColor(itemView.getResources().getColor(R.color.colorRed));
+            stat.setText("Unpaid");
+        }else {
+            stat.setTextColor(itemView.getResources().getColor(R.color.main_green_color));
+            stat.setText("Paid");
+        }
 
       /*  String address = "";
 

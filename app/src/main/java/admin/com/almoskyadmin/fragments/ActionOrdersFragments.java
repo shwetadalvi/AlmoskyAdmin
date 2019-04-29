@@ -18,7 +18,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import admin.com.almoskyadmin.AlmoskyAdmin;
@@ -27,6 +26,7 @@ import admin.com.almoskyadmin.activity.HomeActivity;
 import admin.com.almoskyadmin.adapter.OrderListAdapter;
 import admin.com.almoskyadmin.model.OrderListdto;
 import admin.com.almoskyadmin.utils.AppPrefes;
+import admin.com.almoskyadmin.utils.Utility;
 import admin.com.almoskyadmin.utils.api.ApiCalls;
 import admin.com.almoskyadmin.utils.constants.ApiConstants;
 import admin.com.almoskyadmin.utils.constants.PrefConstants;
@@ -45,6 +45,8 @@ public class ActionOrdersFragments extends Fragment implements HomeActivity.Frag
     RecyclerView rvOrders;
     ActionOrdersFragments actionfragment;
     public static int i=0;
+    private boolean isVisible;
+    private boolean isStarted;
 
     private static final String ARG_PAGE_NUMBER = "page_number";
 
@@ -68,6 +70,8 @@ public class ActionOrdersFragments extends Fragment implements HomeActivity.Frag
        tabHostActivity=(HomeActivity) getActivity();
        tabHostActivity.setActionListener(this);
        actionfragment=new ActionOrdersFragments();
+
+
         rvOrders=(RecyclerView)view.findViewById(R.id.rvorderList);
         apiCalls=new ApiCalls();
         appPrefes=new AppPrefes(tabHostActivity);
@@ -81,9 +85,25 @@ public class ActionOrdersFragments extends Fragment implements HomeActivity.Frag
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        isStarted = true;
+        if (isVisible) {
+            Utility.clearTempData();
+            getOrders();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isStarted = false;
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+       /* if (isVisibleToUser) {
 
 
            // if(i!=0) {
@@ -92,6 +112,11 @@ public class ActionOrdersFragments extends Fragment implements HomeActivity.Frag
             // load data here
         }else{
             // fragment is no longer visible
+        } */
+        isVisible = isVisibleToUser;
+        if (isVisible && isStarted){
+            Utility.clearTempData();
+            getOrders();
         }
     }
 
@@ -103,6 +128,7 @@ public class ActionOrdersFragments extends Fragment implements HomeActivity.Frag
                 RequestParams params = new RequestParams();
 
                 params.put("email",  appPrefes.getData(PrefConstants.email));
+               // params.put("status",  2);
                 params.put("status",  1);
 
 
@@ -115,11 +141,6 @@ public class ActionOrdersFragments extends Fragment implements HomeActivity.Frag
             e.printStackTrace();
         }
 
-
-
-
-
-
     }
 
 
@@ -130,9 +151,9 @@ public class ActionOrdersFragments extends Fragment implements HomeActivity.Frag
         RequestParams params = new RequestParams();
 
         params.put("email","admin@gmail.com");
-        params.put("status",1);
+        params.put("status",3);
         params.put("orderId",id);
-        String url = "https://abrlaundryapp.herokuapp.com/order/update";
+        String url = "http://148.72.64.138:3006/order/update";
         //apiCalls.callApiPost(tabHostActivity, params, dialog, url, 2);
         AsyncHttpClient asyncHttpClient=new AsyncHttpClient();
        // requestParams.put("s", queryTerm);
@@ -194,7 +215,7 @@ public class ActionOrdersFragments extends Fragment implements HomeActivity.Frag
 
 
         if(requestId==2){
-
+/*
             try{
 
                 String object= new String(response);
@@ -223,9 +244,10 @@ public class ActionOrdersFragments extends Fragment implements HomeActivity.Frag
                 }
             } catch (JSONException e) {
                 Toast.makeText(tabHostActivity, "msg", Toast.LENGTH_LONG).show();
-            }
+            }*/
 
         }else {
+            //Toast.makeText(getActivity(),"action",Toast.LENGTH_LONG).show();
 
             try{
                 rvOrders.setAdapter(null);

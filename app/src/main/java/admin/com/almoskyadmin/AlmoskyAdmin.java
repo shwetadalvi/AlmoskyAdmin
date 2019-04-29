@@ -44,6 +44,15 @@ public class AlmoskyAdmin {
 
     public int selecterOrderId;
 
+    public boolean NisabClub;
+
+    public boolean isNisabClub() {
+        return NisabClub;
+    }
+
+    public void setNisabClub(boolean nisabClub) {
+        NisabClub = nisabClub;
+    }
 
     private AlmoskyAdmin(){
 

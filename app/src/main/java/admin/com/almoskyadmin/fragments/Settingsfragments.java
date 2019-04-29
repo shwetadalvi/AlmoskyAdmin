@@ -15,7 +15,10 @@ import com.smarteist.autoimageslider.SliderLayout;
 
 import admin.com.almoskyadmin.R;
 import admin.com.almoskyadmin.activity.AddNewDriverActivity;
+import admin.com.almoskyadmin.activity.DiscountActivity;
 import admin.com.almoskyadmin.activity.LoginActivity;
+import admin.com.almoskyadmin.activity.RemarksActivity;
+import admin.com.almoskyadmin.activity.TimingsSettingActivity;
 import admin.com.almoskyadmin.adapter.TabsPagerAdapter;
 import admin.com.almoskyadmin.utils.AppPrefes;
 import admin.com.almoskyadmin.utils.constants.PrefConstants;
@@ -79,9 +82,41 @@ public class Settingsfragments extends Fragment {
             }
         });
 
+        RelativeLayout lyt_Timings=view.findViewById(R.id.lyt_Timings);
+        RelativeLayout lyt_Remarks = view.findViewById(R.id.lyt_Remarks);
+        RelativeLayout lyt_Discount = view.findViewById(R.id.lyt_Discount);
+
+        lyt_Timings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (appPrefes.getBoolData(PrefConstants.isLogin)) {
+                    Intent go = new Intent(getActivity(), TimingsSettingActivity.class);
+                    startActivity(go);
+                }
 
 
+            }
+        });
+        lyt_Remarks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (appPrefes.getBoolData(PrefConstants.isLogin)) {
+                    Intent go = new Intent(getActivity(), RemarksActivity.class);
+                    startActivity(go);
+                }
 
+            }
+        });
+        lyt_Discount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (appPrefes.getBoolData(PrefConstants.isLogin)) {
+                    Intent go = new Intent(getActivity(), DiscountActivity.class);
+                    startActivity(go);
+                }
+
+            }
+        });
 
         return view;
     }

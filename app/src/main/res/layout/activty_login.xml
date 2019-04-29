@@ -6,9 +6,13 @@
    >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <FrameLayout
             android:layout_width="fill_parent"
@@ -29,31 +33,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center"
-                android:layout_marginEnd="@dimen/xl_margin"
                 android:layout_marginStart="@dimen/xl_margin"
-                android:textStyle="bold"
+                android:layout_marginEnd="@dimen/xl_margin"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="-3.0dip"
                 android:text="@string/text_welcome_message"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginEnd="16.0dip"
                 android:layout_marginTop="40.0dip"
+                android:layout_marginEnd="16.0dip"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10.0dip"
                     android:layout_marginStart="10.0dip"
+                    android:layout_marginEnd="10.0dip"
                     android:background="?selectableItemBackgroundBorderless"
 
-                    app:srcCompat="@drawable/ic_language"
-                    android:tint="@color/colorWhite" />
+                    android:tint="@color/colorWhite"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_language" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -61,8 +66,9 @@
                     android:layout_marginEnd="10.0dip"
                     android:background="?selectableItemBackgroundBorderless"
                     android:onClick="contact"
-                    app:srcCompat="@drawable/ic_call_center"
-                    android:tint="@color/colorWhite" />
+                    android:tint="@color/colorWhite"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_call_center" />
             </LinearLayout>
         </FrameLayout>
 

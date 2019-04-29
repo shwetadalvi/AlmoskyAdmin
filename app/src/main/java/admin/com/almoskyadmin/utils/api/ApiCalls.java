@@ -62,7 +62,7 @@ public class ApiCalls {
                 Log.e("Failure-", "JSON:" + errorResponse);
               try{
                   mDialog.cancel();
-                  mActivity.getResponse(errorResponse.toString(), requestId);
+                 // mActivity.getResponse(errorResponse.toString(), requestId);
               }catch (Exception e){
 
               }

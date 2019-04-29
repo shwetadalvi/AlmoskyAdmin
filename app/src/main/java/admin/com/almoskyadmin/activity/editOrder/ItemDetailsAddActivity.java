@@ -31,9 +31,7 @@ public class ItemDetailsAddActivity extends BaseActivity {
     private TextView title;
     String catName,itemName;
     int itemId,catId;
-    private ArrayList<data1.Detail.Item> dry;
-    private ArrayList<data1.Detail.Item> wash;
-    private ArrayList<data1.Detail.Item> iron;
+
 
     private ArrayList<data1.Detail.Item> drytemp;
     private ArrayList<data1.Detail.Item> washtemp;
@@ -108,9 +106,6 @@ public class ItemDetailsAddActivity extends BaseActivity {
    //     dryprice.setText(String.valueOf(getAmount(itemId,1)));
 
 
-        dry= AlmoskyAdmin.getInst().getDrycleanList1();
-        wash=AlmoskyAdmin.getInst().getWashList1();
-        iron=AlmoskyAdmin.getInst().getIronList1();
         drytemp= AlmoskyAdmin.getInst().getDrycleanList1temp();
         washtemp=AlmoskyAdmin.getInst().getWashList1temp();
         irontemp=AlmoskyAdmin.getInst().getIronList1temp();

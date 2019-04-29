@@ -1,14 +1,11 @@
 package admin.com.almoskyadmin.viewholder;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import admin.com.almoskyadmin.AlmoskyAdmin;
 import admin.com.almoskyadmin.R;
@@ -20,6 +17,7 @@ import admin.com.almoskyadmin.model.OrderListdto;
 public class OrderRecyclerViewHolders extends RecyclerView.ViewHolder {
 
     private TextView textTitle;
+    TextView stat,textOrderType,textDriverName;
     //    UserActionCountItemBinding binding;
     public TextView orderdate,orderno,status,custname,pickdate,deldate,area;
 
@@ -47,8 +45,9 @@ public class OrderRecyclerViewHolders extends RecyclerView.ViewHolder {
         pickdate=itemView.findViewById(R.id.pickDate);
         deldate=itemView.findViewById(R.id.delDate);
         lyt=itemView.findViewById(R.id.lytOrderList);
-
-        Button status=itemView.findViewById(R.id.status);
+        stat=itemView.findViewById(R.id.status);
+        textOrderType=itemView.findViewById(R.id.textOrderType);
+        textDriverName=itemView.findViewById(R.id.textDriverName);
 
         lyt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +73,35 @@ public class OrderRecyclerViewHolders extends RecyclerView.ViewHolder {
         deldate.setText(item.getDeliveryTime());
         area.setText(item.getArea());
 
+        textDriverName.setVisibility(View.VISIBLE);
+       /* if(item.getOrderStatus()==1){
+
+            stat.setVisibility(View.VISIBLE);
+            stat.setText("To be Collected");
+            stat.setBackgroundColor(itemView.getResources().getColor(R.color.main_green_color));
+        }
+        if(item.getOrderStatus()==2){
+
+            stat.setVisibility(View.VISIBLE);
+            stat.setText("Collected");
+            stat.setBackgroundColor(itemView.getResources().getColor(R.color.colorRed));
+        }
+*/
+       if(item.getPickupDriverName()!= null) {
+           textDriverName.setVisibility(View.VISIBLE);
+           textDriverName.setText("Driver : " + item.getPickupDriverName());
+       }
+        if (item.getDelivery_type().equalsIgnoreCase("1"))
+            textOrderType.setText("Normal Service");
+        else
+            textOrderType.setText("Fast Service");
+        if (item.getPayment_status() == 0) {
+            stat.setTextColor(itemView.getResources().getColor(R.color.colorRed));
+            stat.setText("Unpaid");
+        }else {
+            stat.setTextColor(itemView.getResources().getColor(R.color.main_green_color));
+            stat.setText("Paid");
+        }
 
       /*  String address = "";
 
