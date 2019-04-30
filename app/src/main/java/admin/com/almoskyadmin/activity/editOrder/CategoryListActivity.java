@@ -420,17 +420,17 @@ public class CategoryListActivity extends BaseActivity {
                                 AlmoskyAdmin.getInst().setCartamount(0);
 
                                 AlmoskyAdmin.getInst().setNasabRate(0);
-                                AlmoskyAdmin.getInst().setNisabClub(false);
+                                //AlmoskyAdmin.getInst().setNisabClub(false);
                                 AlmoskyAdmin.getInst().setDrycleanList1temp(null);
                                 AlmoskyAdmin.getInst().setWashList1temp(null);
                                 AlmoskyAdmin.getInst().setIronList1temp(null);
-                                AlmoskyAdmin.getInst().setSelectedOrderType(null);
-                                AlmoskyAdmin.getInst().setSelectedOrder(null);
+                               // AlmoskyAdmin.getInst().setSelectedOrderType(null);
+                               // AlmoskyAdmin.getInst().setSelectedOrder(null);
                                 AlmoskyAdmin.getInst().setIronList(null);
                                 AlmoskyAdmin.getInst().setWashList(null);
                                 AlmoskyAdmin.getInst().setDrycleanList(null);
                                 AlmoskyAdmin.getInst().setCurentOrderId(null);
-                                AlmoskyAdmin.getInst().setSelecterOrderId(0);
+                              //  AlmoskyAdmin.getInst().setSelecterOrderId(0);
                                 AlmoskyAdmin.getInst().setCurrentOrders(null);
 
                           /*      new SweetAlertDialog(CategoryListActivity.this, SweetAlertDialog.NORMAL_TYPE)
@@ -574,14 +574,14 @@ public class CategoryListActivity extends BaseActivity {
            // double totalcount = drycount + washcount + ironcount;
             totalamount = dryamount + washamount + ironamount;
 
-
+            finalOrderTotal = totalamount;
             Log.e("Inside :","JSON :finalOrderTotal"+finalOrderTotal);
 
-            if( AlmoskyAdmin.getInst().isNisabClub()) {
+            if( AlmoskyAdmin.getInst().getSelectedOrder().getNasab_disc_perc() > 0) {
                 nasabDiscount = calculateNasabDiscount(finalOrderTotal);
                 finalOrderTotal = totalamount- nasabDiscount;
             }else{
-                if(AlmoskyAdmin.getInst().getSelectedOrder().getCustomerDiscount() > 0){
+                if(AlmoskyAdmin.getInst().getSelectedOrder().getCustomer_disc_perc() > 0){
 
                     customerDiscount = totalamount * (AlmoskyAdmin.getInst().getSelectedOrder().getCustomer_disc_perc() * 0.01);
                     finalOrderTotal = totalamount- customerDiscount;

@@ -109,31 +109,6 @@ public class OrderDetailsActivity extends BaseActivity implements PrintingCallba
     String driverId;
     private EditText remarks;
 
-    public static String PerfectDecimal(String str, int MAX_BEFORE_POINT, int MAX_DECIMAL) {
-        if (str.charAt(0) == '.') str = "0" + str;
-        int max = str.length();
-
-        String rFinal = "";
-        boolean after = false;
-        int i = 0, up = 0, decimal = 0;
-        char t;
-        while (i < max) {
-            t = str.charAt(i);
-            if (t != '.' && after == false) {
-                up++;
-                if (up > MAX_BEFORE_POINT) return rFinal;
-            } else if (t == '.') {
-                after = true;
-            } else {
-                decimal++;
-                if (decimal > MAX_DECIMAL)
-                    return rFinal;
-            }
-            rFinal = rFinal + t;
-            i++;
-        }
-        return rFinal;
-    }
 
     @Override
     protected void onResume() {
@@ -1551,54 +1526,58 @@ public class OrderDetailsActivity extends BaseActivity implements PrintingCallba
 
 
 
-            if (AlmoskyAdmin.getInst().getSelectedOrder().getArea().equals("NASAB")) {
+            if (AlmoskyAdmin.getInst().isNisabClub()) {
+
                 double discount = (total * AlmoskyAdmin.getInst().getSelectedOrder().getNasab_disc_perc()*0.01);
                 total = total - discount;
                 double discountAmount = total + (total * 0.05);
                // double discountAmount = total - (total * 0.3);
-                binding.vattotalPrice.setText("AED" + PerfectDecimal(String.valueOf(total * 0.05), 2, 2));
-                binding.subtotalPrice.setText("AED" + String.valueOf(total));
+                double vat = total * 0.05;
+                binding.vattotalPrice.setText("AED" + String.format("%.2f",vat));
+                binding.subtotalPrice.setText("AED" + String.format("%.2f",discountAmount));
                 binding.offerTitle.setText(getResources().getString(R.string.text_offer)+"("+AlmoskyAdmin.getInst().getSelectedOrder().getNasab_disc_perc() +")");
                 binding.nasabOffer.setVisibility(View.VISIBLE);
                 binding.offerPrice.setText(String.valueOf(discount));
 
                 if (AlmoskyAdmin.getInst().getSelectedOrder().getPayment_status() == 0) {
-                    binding.textBalance.setText("Balance : AED " + String.valueOf(discountAmount));
+                    binding.textBalance.setText("Balance : AED " + String.format("%.2f",discountAmount));
                     binding.textPaid.setText("Paid : AED 0");
                 }
                 if (AlmoskyAdmin.getInst().getSelectedOrder().getPayment_status() == 1) {
-                    binding.textPaid.setText("Paid : AED " + String.valueOf(discountAmount));
+                    binding.textPaid.setText("Paid : AED " + String.format("%.2f",discountAmount));
                     binding.textBalance.setText("Balance : AED 0");
                     binding.textPaymentMode.setVisibility(View.VISIBLE);
                     if(AlmoskyAdmin.getInst().getSelectedOrder().getPayment_mode().equalsIgnoreCase("Online")){
-                        binding.textPaymentMode.setText("Credit Card : AED "+ String.valueOf(discountAmount));
+                        binding.textPaymentMode.setText("Credit Card : AED "+ String.format("%.2f",discountAmount));
                     }else if(AlmoskyAdmin.getInst().getSelectedOrder().getPayment_mode().equalsIgnoreCase("CASH ON DELIVERY"))
-                        binding.textPaymentMode.setText("Cash On Delivery : AED "+ String.valueOf(discountAmount));
+                        binding.textPaymentMode.setText("Cash On Delivery : AED "+ String.format("%.2f",discountAmount));
                 }
             } else {
-                if(AlmoskyAdmin.getInst().getSelectedOrder().getCustomerDiscount() > 0){
+                if(AlmoskyAdmin.getInst().getSelectedOrder().getCustomer_disc_perc() > 0){
 
                     double customerDiscount = total * (AlmoskyAdmin.getInst().getSelectedOrder().getCustomer_disc_perc() * 0.01);
                     total = total - customerDiscount;
                     binding.customerDiscount.setVisibility(View.VISIBLE);
-                    binding.DiscountPrice.setText(String.valueOf(customerDiscount));
+                    binding.DiscountPrice.setText(String.format("%.2f",customerDiscount));
                 }
                 double discountAmount = total + (total * 0.05);
                 binding.nasabOffer.setVisibility(View.GONE);
-                binding.subtotalPrice.setText("AED" + String.valueOf(discountAmount));
-                binding.vattotalPrice.setText("AED" + PerfectDecimal(String.valueOf(total * 0.05), 2, 2));
+                double vat = total * 0.05;
+                binding.vattotalPrice.setText("AED" + String.format("%.2f",vat));
+                binding.subtotalPrice.setText("AED" +String.format("%.2f",discountAmount));
+
                 if (AlmoskyAdmin.getInst().getSelectedOrder().getPayment_status() == 0) {
-                    binding.textBalance.setText("Balance : AED " + String.valueOf(discountAmount));
+                    binding.textBalance.setText("Balance : AED " + String.format("%.2f",discountAmount));
                     binding.textPaid.setText("Paid : AED 0");
                 }
                 if (AlmoskyAdmin.getInst().getSelectedOrder().getPayment_status() == 1) {
-                    binding.textPaid.setText("Paid : AED " + String.valueOf(discountAmount));
+                    binding.textPaid.setText("Paid : AED " + String.format("%.2f",discountAmount));
                     binding.textBalance.setText("Balance : AED 0");
                     binding.textPaymentMode.setVisibility(View.VISIBLE);
                     if(AlmoskyAdmin.getInst().getSelectedOrder().getPayment_mode().equalsIgnoreCase("Online")){
-                        binding.textPaymentMode.setText("Credit Card : AED "+ String.valueOf(discountAmount));
+                        binding.textPaymentMode.setText("Credit Card : AED "+ String.format("%.2f",discountAmount));
                     }else if(AlmoskyAdmin.getInst().getSelectedOrder().getPayment_mode().equalsIgnoreCase("CASH ON DELIVERY"))
-                        binding.textPaymentMode.setText("Cash On Delivery : AED "+  String.valueOf(discountAmount));
+                        binding.textPaymentMode.setText("Cash On Delivery : AED "+  String.format("%.2f",discountAmount));
                     }
                 }
             }
