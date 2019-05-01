@@ -35,6 +35,7 @@ public interface ApiConstants {
     String customerList = "customer/discountlist";
     String postCustomerDiscount = "customer/newdiscount";
     String addRemark = "adminremarks/new";
+    String addNasabTerms = "loginAdmin/nasabterms";
     String deleteRemark = "adminremarks/delete";
     String updateRemark = "adminremarks/update";
     String query = "enquiry";

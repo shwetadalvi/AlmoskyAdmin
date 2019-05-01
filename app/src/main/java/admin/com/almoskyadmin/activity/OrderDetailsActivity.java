@@ -80,6 +80,7 @@ import static admin.com.almoskyadmin.utils.constants.Constants.COMPANY_TELE;
 import static admin.com.almoskyadmin.utils.constants.Constants.COMPANY_TELE2;
 import static admin.com.almoskyadmin.utils.constants.Constants.COMPANY_TRN;
 import static admin.com.almoskyadmin.utils.constants.Constants.COMPANY_VAT;
+import static admin.com.almoskyadmin.utils.constants.Constants.DISCOUNT;
 import static admin.com.almoskyadmin.utils.constants.Constants.NASAB_OFFER;
 import static admin.com.almoskyadmin.utils.constants.Constants.TERMS1;
 import static admin.com.almoskyadmin.utils.constants.Constants.TERMS2;
@@ -485,6 +486,7 @@ public class OrderDetailsActivity extends BaseActivity implements PrintingCallba
                 binding.total.getText().toString(),
                 binding.vattotalPrice.getText().toString(),
                 binding.offerPrice.getText().toString(),
+                binding.DiscountPrice.getText().toString(),
                 binding.subtotalPrice.getText().toString(),
         AlmoskyAdmin.getInst().getSelectedOrder().getPickupDriverName(),
                 AlmoskyAdmin.getInst().getSelectedOrder().getDeliveryDriverName());
@@ -492,7 +494,7 @@ public class OrderDetailsActivity extends BaseActivity implements PrintingCallba
     }
 
     public void bluetoothInvoicePrinting(int count, ArrayList<data.Result> drycleanList, ArrayList<data.Result> ironList, ArrayList<data.Result> washList, int orderId, OrderListdto.Result userData, String total, String vat,
-                                         String offer, String subtotal,String pickupDriverName,String deliveryDriverName) {
+                                         String offer,String discount, String subtotal,String pickupDriverName,String deliveryDriverName) {
         for (int i = 0; i < count; i++) {
             ArrayList<Printable> printables = new ArrayList<>();
             printables.add(new Printable.PrintableBuilder()
@@ -639,12 +641,21 @@ public class OrderDetailsActivity extends BaseActivity implements PrintingCallba
                     .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
                     .setNewLinesAfter(2)
                     .build());
-
-            printables.add(new Printable.PrintableBuilder()
-                    .setText(NASAB_OFFER + createSpace(true, NASAB_OFFER.length(), offer.length()) + offer)
-                    .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
-                    .setNewLinesAfter(4)
-                    .build());
+            if (AlmoskyAdmin.getInst().isNisabClub()) {
+                printables.add(new Printable.PrintableBuilder()
+                        .setText(NASAB_OFFER + createSpace(true, NASAB_OFFER.length(), offer.length()) + offer)
+                        .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                        .setNewLinesAfter(4)
+                        .build());
+            }else{
+                if(AlmoskyAdmin.getInst().getSelectedOrder().getCustomer_disc_perc() > 0) {
+                    printables.add(new Printable.PrintableBuilder()
+                            .setText(DISCOUNT + createSpace(true, DISCOUNT.length(), discount.length()) + discount)
+                            .setFontSize(DefaultPrinter.Companion.getFONT_SIZE_NORMAL())
+                            .setNewLinesAfter(4)
+                            .build());
+                }
+            }
 //            String vat = String.valueOf(order.getOrder().getVat());
             printables.add(new Printable.PrintableBuilder()
                     .setText(COMPANY_VAT + createSpace(true, COMPANY_VAT.length(), vat.length()) + vat)

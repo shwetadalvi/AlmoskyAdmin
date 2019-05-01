@@ -43,7 +43,7 @@ public class RemarksActivity extends BaseActivity implements ClickListeners.Item
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remarks);
-        edtRemarks = findViewById(R.id.edtRemarks);
+        edtRemarks = findViewById(R.id.edtTerms);
         btnSave = findViewById(R.id.btnSave);
         remarksRecycler = findViewById(R.id.remarksRecycler);
         appPrefes = new AppPrefes(this);

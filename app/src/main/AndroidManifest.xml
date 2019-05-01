@@ -19,6 +19,7 @@
         <activity android:name=".activity.DiscountActivity"></activity>
         <activity android:name=".activity.RemarksActivity" />
         <activity android:name=".activity.TimingsSettingActivity" />
+        <activity android:name=".activity.NasabTermsActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">

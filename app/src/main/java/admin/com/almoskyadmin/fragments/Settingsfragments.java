@@ -17,6 +17,7 @@ import admin.com.almoskyadmin.R;
 import admin.com.almoskyadmin.activity.AddNewDriverActivity;
 import admin.com.almoskyadmin.activity.DiscountActivity;
 import admin.com.almoskyadmin.activity.LoginActivity;
+import admin.com.almoskyadmin.activity.NasabTermsActivity;
 import admin.com.almoskyadmin.activity.RemarksActivity;
 import admin.com.almoskyadmin.activity.TimingsSettingActivity;
 import admin.com.almoskyadmin.adapter.TabsPagerAdapter;
@@ -85,6 +86,7 @@ public class Settingsfragments extends Fragment {
         RelativeLayout lyt_Timings=view.findViewById(R.id.lyt_Timings);
         RelativeLayout lyt_Remarks = view.findViewById(R.id.lyt_Remarks);
         RelativeLayout lyt_Discount = view.findViewById(R.id.lyt_Discount);
+        RelativeLayout lyt_NasabTerms = view.findViewById(R.id.lyt_NasabTerms);
 
         lyt_Timings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +114,16 @@ public class Settingsfragments extends Fragment {
             public void onClick(View v) {
                 if (appPrefes.getBoolData(PrefConstants.isLogin)) {
                     Intent go = new Intent(getActivity(), DiscountActivity.class);
+                    startActivity(go);
+                }
+
+            }
+        });
+        lyt_NasabTerms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (appPrefes.getBoolData(PrefConstants.isLogin)) {
+                    Intent go = new Intent(getActivity(), NasabTermsActivity.class);
                     startActivity(go);
                 }
 

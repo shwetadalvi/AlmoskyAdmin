@@ -34,6 +34,7 @@ public interface Constants {
     String COMPANY_VAT = "VAT";
     String COMPANY_GROSS = "Gross Amount";
     String NASAB_OFFER = "Nasab Offer";
+    String DISCOUNT = "Discount";
     String TERMS_CONDITIONS = "Terms and Conditions";
     String TERMS1 = "* Articles not collected within 30 days will be disposed off.";
     String TERMS2 = "* For articles damaged or lost the maximum sum payable will be five times the charge on the bill of the article.";
